@@ -1,0 +1,9 @@
+{
+  "ema_periods": [
+    70,
+    200
+  ],
+  "rsi_period": 14,
+  "last_updated": "2025-10-29T15:56:04.946232",
+  "updated_by": "system"
+}

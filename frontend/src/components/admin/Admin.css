@@ -1,0 +1,886 @@
+/* Admin.css */
+.admin-panel {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.admin-tabs button {
+  padding: 12px 24px;
+  border: none;
+  background: #f8f9fa;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.admin-tabs button.active {
+  background: #2563eb;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.admin-tabs button:hover:not(.active) {
+  background: #e9ecef;
+}
+
+.admin-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.upload-section h3,
+.indicators-section h3,
+.users-section h3 {
+  color: #2d3748;
+  margin-bottom: 24px;
+  font-size: 1.5rem;
+}
+
+.upload-card {
+  background: #f8fafc;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border-left: 4px solid #3b82f6;
+}
+
+.upload-card.danger {
+  background: #fef2f2;
+  border-left-color: #ef4444;
+}
+
+.upload-card h4 {
+  color: #1e293b;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.upload-card p {
+  color: #64748b;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.upload-card input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+}
+
+.upload-card input[type="file"]:hover {
+  border-color: #3b82f6;
+}
+
+.upload-card button {
+  padding: 12px 24px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.upload-card button:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+.upload-card button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.upload-stats {
+  background: #f0f9ff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 24px;
+  border-left: 4px solid #0ea5e9;
+}
+
+.upload-stats h4 {
+  color: #0369a1;
+  margin-bottom: 16px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.stats-grid div {
+  padding: 8px 12px;
+  background: white;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+/* Indicators Section */
+.indicators-section .current-settings {
+  background: #f0fdf4;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  border-left: 4px solid #22c55e;
+}
+
+.settings-group {
+  margin-bottom: 20px;
+}
+
+.settings-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.settings-group input {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.settings-group input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.save-btn {
+  padding: 12px 24px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.save-btn:hover {
+  background: #059669;
+}
+
+/* Users Section */
+.invite-section {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.invite-section button {
+  padding: 12px 24px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.invite-section button:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.invite-section button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.invites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.invite-card {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.invite-code code {
+  background: #1e293b;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.invite-date,
+.invite-status {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 8px 0;
+}
+
+.delete-btn {
+  padding: 6px 12px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-tabs {
+    flex-direction: column;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .invites-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Добавьте в Admin.css */
+.settings-group {
+  margin-bottom: 24px;
+}
+
+.settings-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.settings-group input {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.settings-group input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.settings-group small {
+  color: #6b7280;
+  font-size: 0.8rem;
+  display: block;
+}
+
+.current-settings {
+  background: #f0fdf4;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border-left: 4px solid #22c55e;
+}
+
+.current-settings h4 {
+  color: #166534;
+  margin-bottom: 12px;
+}
+
+.current-settings p {
+  margin: 6px 0;
+  color: #3f6212;
+}
+
+.save-btn {
+  padding: 14px 28px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Confirm Dialog Styles */
+.confirm-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.confirm-dialog {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.confirm-dialog-content h3 {
+  margin: 0 0 16px 0;
+  color: #2d3748;
+  font-size: 1.2rem;
+}
+
+.confirm-dialog-content p {
+  margin: 0 0 24px 0;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.confirm-dialog-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.confirm-dialog-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.confirm-dialog-btn.cancel {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+
+.confirm-dialog-btn.cancel:hover {
+  background: #cbd5e0;
+}
+
+.confirm-dialog-btn.confirm {
+  background: #e53e3e;
+  color: white;
+}
+
+.confirm-dialog-btn.confirm:hover {
+  background: #c53030;
+}
+
+/* Danger zone card */
+.upload-card.danger {
+  background: #fef2f2;
+  border-left-color: #ef4444;
+}
+
+.upload-card.danger button {
+  background: #ef4444;
+  color: white;
+}
+
+.upload-card.danger button:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+/* Admin.css - добавьте эти стили */
+.stats-summary {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.stats-summary div {
+  margin: 5px 0;
+  padding: 3px 0;
+}
+
+.tickers-details {
+  margin-top: 20px;
+}
+
+.ticker-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.ticker-header {
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.ticker-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+  font-size: 14px;
+}
+
+.ticker-stats span {
+  padding: 4px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.upload-stats h4 {
+  color: #2563eb;
+  margin-bottom: 15px;
+}
+
+.upload-stats h5 {
+  color: #374151;
+  margin: 20px 0 10px 0;
+}
+
+/* Admin.css - добавьте эти стили */
+.reset-options {
+  margin-bottom: 15px;
+}
+
+.reset-options label {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.reset-options input[type="radio"] {
+  margin-right: 8px;
+}
+
+.ticker-select {
+  margin: 15px 0;
+}
+
+.ticker-select label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.ticker-select select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+}
+
+.danger-btn {
+  background: #dc3545;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.danger-btn:hover:not(:disabled) {
+  background: #c82333;
+}
+
+.danger-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.warning-text {
+  color: #856404;
+  background: #fff3cd;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Добавим в Admin.css */
+.ticker-select select:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.no-tickers-message {
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* Добавим в Admin.css */
+.invite-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.invite-form .form-group {
+  margin-bottom: 15px;
+}
+
+.invite-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.invite-form input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.invite-for {
+  margin: 5px 0;
+  color: #555;
+}
+
+.invite-expiry {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+/* Стили для таблицы пользователей */
+.users-table {
+  margin: 20px 0;
+  overflow-x: auto;
+}
+
+.users-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.users-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.users-table tr:hover {
+  background: #f8f9fa;
+}
+
+.role-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.role-badge.admin {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+.role-badge.user {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.action-btn.toggle-active {
+  background: #3b82f6;
+  color: white;
+}
+
+.action-btn.make-admin {
+  background: #f59e0b;
+  color: white;
+}
+
+.action-btn.danger {
+  background: #ef4444;
+  color: white;
+}
+
+.action-btn:hover {
+  opacity: 0.8;
+}
+
+.no-users {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Admin.css - Исправления для статистики загрузки */
+
+/* Статистика загрузки */
+.upload-stats {
+  background: #f0f9ff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 24px;
+  border-left: 4px solid #0ea5e9;
+  color: #1e293b; /* Добавляем темный цвет текста */
+}
+
+.upload-stats h4 {
+  color: #0369a1;
+  margin-bottom: 16px;
+}
+
+.upload-stats h5 {
+  color: #374151;
+  margin: 20px 0 10px 0;
+}
+
+/* Сводка статистики */
+.stats-summary {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  color: #1e293b; /* Темный текст */
+  border: 1px solid #e2e8f0;
+}
+
+.stats-summary div {
+  margin: 5px 0;
+  padding: 3px 0;
+  color: #374151; /* Цвет текста */
+}
+
+.stats-summary strong {
+  color: #1e293b; /* Темный цвет для выделенного текста */
+}
+
+/* Детали по тикерам */
+.tickers-details {
+  margin-top: 20px;
+}
+
+.ticker-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  color: #1e293b; /* Темный текст */
+}
+
+.ticker-header {
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f0f0f0;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.ticker-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+  font-size: 14px;
+}
+
+.ticker-stats span {
+  padding: 4px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  text-align: center;
+  color: #374151; /* Темный текст */
+  border: 1px solid #e2e8f0;
+}
+
+/* Карточки загрузки */
+.upload-card {
+  background: #f8fafc;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border-left: 4px solid #3b82f6;
+  color: #1e293b; /* Темный текст */
+}
+
+.upload-card h4 {
+  color: #1e293b;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.upload-card p {
+  color: #64748b;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+/* Опасная зона */
+.upload-card.danger {
+  background: #fef2f2;
+  border-left-color: #ef4444;
+  color: #1e293b;
+}
+
+.upload-card.danger h4 {
+  color: #dc2626;
+}
+
+/* Формы и инпуты */
+.invite-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+
+.invite-form label {
+  color: #374151;
+}
+
+.invite-form input {
+  color: #1e293b;
+  background: white;
+}
+
+/* Таблица пользователей */
+.users-table {
+  color: #1e293b;
+}
+
+.users-table th {
+  color: #374151;
+}
+
+.users-table td {
+  color: #4b5563;
+}
+
+/* Инвайт-карточки */
+.invite-card {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  color: #1e293b;
+}
+
+.invite-code code {
+  background: #1e293b;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.invite-date,
+.invite-expiry,
+.invite-status {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 8px 0;
+}
+/* components/admin/Admin.css - ДОБАВИТЬ */
+.admin-panel {
+  padding: 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+}
+
+.admin-content-wrapper {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-content-wrapper h1 {
+  color: #2c3e50;
+  margin-bottom: 24px;
+  text-align: center;
+}

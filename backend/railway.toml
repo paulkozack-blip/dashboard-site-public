@@ -1,0 +1,6 @@
+[deploy]
+buildCommand = "pip install -r requirements.txt"
+startCommand = "python main.py"
+
+[env]
+PORT = "8000"
