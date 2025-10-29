@@ -106,3 +106,20 @@ async def get_current_user_info(current_user: User = Depends(get_current_user)) 
         "is_active": current_user.is_active,  # type: ignore
         "created_at": current_user.created_at.isoformat() if current_user.created_at else None  # type: ignore
     }
+
+@router.post("/create-first-invite", response_model=dict)
+async def create_first_invite(db: Session = Depends(get_db)):
+    """Создает первый инвайт для регистрации (временный endpoint)"""
+    from datetime import datetime, timedelta, timezone
+    
+    invite = Invitation(
+        invite_code="FIRSTINVITE123",
+        created_by=1,  # временно
+        expires_at=datetime.now(timezone.utc) + timedelta(days=7),
+        is_used=False
+    )
+    
+    db.add(invite)
+    db.commit()
+    
+    return {"invite_code": "FIRSTINVITE123", "message": "Use this code to register"}
