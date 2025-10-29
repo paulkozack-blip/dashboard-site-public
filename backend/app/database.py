@@ -51,7 +51,7 @@ def create_tables_and_admin():
             # Создаем первого админа
             admin_user = User(
                 username="admin",
-                password_hash=get_password_hash("admin123"),
+                password_hash=get_password_hash("admin"),
                 role=UserRole.ADMIN,
                 is_active=True,
                 is_verified=True
