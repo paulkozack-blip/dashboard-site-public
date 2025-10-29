@@ -114,7 +114,6 @@ async def create_first_invite(db: Session = Depends(get_db)):
     
     invite = Invitation(
         invite_code="FIRSTINVITE123",
-        created_by=1,  # временно
         expires_at=datetime.now(timezone.utc) + timedelta(days=7),
         is_used=False
     )
