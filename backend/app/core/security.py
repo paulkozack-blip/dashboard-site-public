@@ -21,9 +21,16 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 def get_password_hash(password: str) -> str:
-    """Хеширует пароль"""
-    if len(password) > 72:
-        password = password[:72]
+    """Хеширует пароль с учётом лимита bcrypt 72 байта"""
+    # Очистка лишних символов (на случай перевода строки в env)
+    password = password.strip().replace('\r', '').replace('\n', '')
+
+    # Работаем с байтами — ограничиваем по байтам, не по символам
+    pw_bytes = password.encode("utf-8")
+    if len(pw_bytes) > 72:
+        pw_bytes = pw_bytes[:72]
+        password = pw_bytes.decode("utf-8", errors="ignore")
+
     return pwd_context.hash(password)
 
 def create_access_token(data: Dict[str, Any], expires_delta: Optional[timedelta] = None) -> str:
