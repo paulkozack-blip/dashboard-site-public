@@ -1,6 +1,7 @@
 # backend/app/api/routes/charts.py
 from fastapi import APIRouter, UploadFile, File, HTTPException, Query, Depends, Path
-from typing import Optional, List, Dict, BinaryIO, Union, Any, TypedDict
+from typing import Optional, List, Dict, BinaryIO, Union, Any
+from typing_extensions import TypedDict
 import pandas as pd
 import json
 from datetime import datetime
