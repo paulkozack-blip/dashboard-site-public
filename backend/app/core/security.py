@@ -15,8 +15,6 @@ ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440"))
 
 # pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-print("Password repr:", repr(password), "len bytes:", len(password.encode("utf-8")))
-
 pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
 
 
@@ -26,11 +24,12 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def get_password_hash(password: str) -> str:
     """Хеширует пароль с учётом лимита bcrypt 72 байта"""
-    # Очистка лишних символов (на случай перевода строки в env)
     password = password.strip().replace('\r', '').replace('\n', '')
-
-    # Работаем с байтами — ограничиваем по байтам, не по символам
     pw_bytes = password.encode("utf-8")
+
+    # ВРЕМЕННЫЙ ЛОГ
+    print("Password repr:", repr(password), "| bytes:", len(pw_bytes))
+
     if len(pw_bytes) > 72:
         pw_bytes = pw_bytes[:72]
         password = pw_bytes.decode("utf-8", errors="ignore")
