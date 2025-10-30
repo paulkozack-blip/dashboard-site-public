@@ -16,7 +16,19 @@ import {
   LoginResponse,
 } from '../types';
 
-const API_BASE_URL = 'http://localhost:8000';
+// const API_BASE_URL = 'http://localhost:8000';
+
+// export const api = axios.create({
+//   baseURL: API_BASE_URL,
+//   timeout: 10000,
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+// });
+
+// const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+const API_BASE_URL = 'https://dashboard-site-public-1.onrender.com';
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
