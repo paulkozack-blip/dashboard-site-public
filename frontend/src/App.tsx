@@ -1,7 +1,7 @@
 // App.tsx - ИСПРАВЛЕННАЯ ВЕРСИЯ
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Navigate,
@@ -9,6 +9,8 @@ import {
 } from 'react-router-dom';
 import { apiService } from './services/api';
 import { User } from './types';
+
+
 
 import Dashboard from './components/Dashboard';
 import Login from './pages/Login';
