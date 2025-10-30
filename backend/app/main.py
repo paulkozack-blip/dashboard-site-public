@@ -35,7 +35,7 @@ app = FastAPI(
 origins = [
     "http://localhost:3000",
     "http://localhost:5173",
-    # Добавь сюда URL твоего фронтенда после деплоя
+    "https://dashboard-site-pmlu.onrender.com",
 ]
 
 app.add_middleware(
