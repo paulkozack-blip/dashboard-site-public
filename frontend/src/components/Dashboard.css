@@ -51,7 +51,9 @@
   align-items: center;
 }
 
-.refresh-btn, .admin-btn, .logout-btn {
+.refresh-btn,
+.admin-btn,
+.logout-btn {
   padding: 10px 16px;
   border: 2px solid #e1e5e9;
   border-radius: 8px;
@@ -65,7 +67,9 @@
   gap: 6px;
 }
 
-.refresh-btn:hover, .admin-btn:hover, .logout-btn:hover {
+.refresh-btn:hover,
+.admin-btn:hover,
+.logout-btn:hover {
   background: #f8f9fa;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -101,7 +105,6 @@
   height: 600px;
 }
 
-
 .dashboard-error {
   background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
   color: #721c24;
@@ -129,8 +132,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Адаптивность */
@@ -141,26 +148,26 @@
     gap: 16px;
     align-items: stretch;
   }
-  
+
   .dashboard-title {
     font-size: 24px;
     justify-content: center;
     text-align: center;
   }
-  
+
   .header-controls {
     justify-content: center;
   }
-  
+
   .dashboard__content {
     padding: 16px;
   }
-  
+
   .chart-main-container {
     padding: 16px;
     margin-top: 16px;
   }
-  
+
   .dashboard-chart--single {
     height: 400px;
   }
@@ -171,22 +178,24 @@
   .dashboard {
     background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
   }
-  
+
   .dashboard__header {
     background: #2d3748;
     border-bottom-color: #4a5568;
   }
-  
+
   .dashboard-title {
     color: #e2e8f0;
   }
-  
-  .refresh-btn, .admin-btn, .logout-btn {
+
+  .refresh-btn,
+  .admin-btn,
+  .logout-btn {
     background: #4a5568;
     color: #e2e8f0;
     border-color: #718096;
   }
-  
+
   .chart-main-container {
     background: #2d3748;
     border-color: #4a5568;
@@ -211,13 +220,22 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
   animation: loading-shimmer 1.5s infinite;
 }
 
 @keyframes loading-shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* Состояния для неактивных серий */
@@ -295,7 +313,7 @@
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .info-item {
     flex-direction: row;
     justify-content: space-between;

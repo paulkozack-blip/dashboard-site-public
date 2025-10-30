@@ -9,8 +9,8 @@ export interface FibonacciLevel {
   ratio: number;
   price: number;
   label: string;
-  color: string; 
-  visible: boolean; 
+  color: string;
+  visible: boolean;
 }
 
 export interface FibonacciRetracement {
@@ -18,7 +18,7 @@ export interface FibonacciRetracement {
   startPoint: FibonacciPoint;
   endPoint: FibonacciPoint;
   levels: FibonacciLevel[];
-  color: string; 
+  color: string;
   visible: boolean;
 }
 

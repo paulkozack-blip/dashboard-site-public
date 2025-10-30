@@ -64,7 +64,7 @@ export const sortByTime = <T extends { time: number }>(items: T[]): T[] => {
  * @returns Отформатированная дата
  */
 export const formatUnixTime = (
-  unixTime: number, 
+  unixTime: number,
   locale: string = 'ru-RU'
 ): string => {
   const date = new Date(unixTime * 1000);
@@ -77,7 +77,10 @@ export const formatUnixTime = (
  * @param endTime - Конечное время
  * @returns Разница в днях
  */
-export const getDaysDifference = (startTime: number, endTime: number): number => {
+export const getDaysDifference = (
+  startTime: number,
+  endTime: number
+): number => {
   const diffMs = (endTime - startTime) * 1000;
   return Math.floor(diffMs / (1000 * 60 * 60 * 24));
 };
@@ -88,7 +91,10 @@ export const getDaysDifference = (startTime: number, endTime: number): number =>
  * @param endDate - Конечная дата (ISO)
  * @returns Массив Unix timestamps
  */
-export const createTimeRange = (startDate: string, endDate: string): number[] => {
+export const createTimeRange = (
+  startDate: string,
+  endDate: string
+): number[] => {
   const start = isoDateToUnixTime(startDate);
   const end = isoDateToUnixTime(endDate);
   const result: number[] = [];

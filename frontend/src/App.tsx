@@ -1,6 +1,12 @@
 // App.tsx - ИСПРАВЛЕННАЯ ВЕРСИЯ
 import React, { useState, useEffect, useCallback } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from 'react-router-dom';
 import { apiService } from './services/api';
 import { User } from './types';
 
@@ -23,10 +29,10 @@ interface PrivateRouteProps {
   authChecked: boolean;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ 
-  children, 
-  currentUser, 
-  authChecked 
+const PrivateRoute: React.FC<PrivateRouteProps> = ({
+  children,
+  currentUser,
+  authChecked,
 }) => {
   if (!authChecked) {
     return (
@@ -50,10 +56,10 @@ interface PublicRouteProps {
   authChecked: boolean;
 }
 
-const PublicRoute: React.FC<PublicRouteProps> = ({ 
-  children, 
-  currentUser, 
-  authChecked 
+const PublicRoute: React.FC<PublicRouteProps> = ({
+  children,
+  currentUser,
+  authChecked,
 }) => {
   if (!authChecked) {
     return (
@@ -72,9 +78,9 @@ const PublicRoute: React.FC<PublicRouteProps> = ({
 };
 
 // Компонент для использования useNavigate внутри
-const AppRoutes: React.FC<{ appState: AppState; onLogout: () => void }> = ({ 
-  appState, 
-  onLogout 
+const AppRoutes: React.FC<{ appState: AppState; onLogout: () => void }> = ({
+  appState,
+  onLogout,
 }) => {
   const navigate = useNavigate();
 
@@ -88,39 +94,39 @@ const AppRoutes: React.FC<{ appState: AppState; onLogout: () => void }> = ({
 
   return (
     <Routes>
-      <Route 
-        path="/login" 
+      <Route
+        path="/login"
         element={
-          <PublicRoute 
-            currentUser={appState.currentUser} 
+          <PublicRoute
+            currentUser={appState.currentUser}
             authChecked={appState.authChecked}
           >
             <Login />
           </PublicRoute>
-        } 
+        }
       />
-      
-      <Route 
-        path="/admin" 
+
+      <Route
+        path="/admin"
         element={
-          <PrivateRoute 
-            currentUser={appState.currentUser} 
+          <PrivateRoute
+            currentUser={appState.currentUser}
             authChecked={appState.authChecked}
           >
-            <Admin 
+            <Admin
               currentUser={appState.currentUser}
               onLogout={onLogout}
               onNavigateToDashboard={handleNavigateToDashboard}
             />
           </PrivateRoute>
-        } 
+        }
       />
 
-      <Route 
-        path="/dashboard" 
+      <Route
+        path="/dashboard"
         element={
-          <PrivateRoute 
-            currentUser={appState.currentUser} 
+          <PrivateRoute
+            currentUser={appState.currentUser}
             authChecked={appState.authChecked}
           >
             <Dashboard
@@ -129,11 +135,11 @@ const AppRoutes: React.FC<{ appState: AppState; onLogout: () => void }> = ({
               onNavigateToAdmin={handleNavigateToAdmin}
             />
           </PrivateRoute>
-        } 
+        }
       />
 
-      <Route 
-        path="/" 
+      <Route
+        path="/"
         element={
           appState.authChecked ? (
             appState.currentUser ? (
@@ -147,20 +153,18 @@ const AppRoutes: React.FC<{ appState: AppState; onLogout: () => void }> = ({
               <p>Загрузка приложения...</p>
             </div>
           )
-        } 
+        }
       />
 
-      <Route 
-        path="*" 
+      <Route
+        path="*"
         element={
           <div className="app-404">
             <h1>404</h1>
             <p>Страница не найдена</p>
-            <button onClick={() => navigate('/')}>
-              На главную
-            </button>
+            <button onClick={() => navigate('/')}>На главную</button>
           </div>
-        } 
+        }
       />
     </Routes>
   );
@@ -173,7 +177,7 @@ const App: React.FC = () => {
     currentUser: null,
     loading: false,
     error: null,
-    authChecked: false
+    authChecked: false,
   });
 
   /**
@@ -181,35 +185,34 @@ const App: React.FC = () => {
    */
   const checkAuth = useCallback(async (): Promise<void> => {
     console.log(`🔐 [App] Проверка авторизации`);
-    
+
     try {
       const token = localStorage.getItem('authToken');
-      
+
       if (!token) {
         console.log(`ℹ️ [App] Токен не найден`);
-        setAppState(prev => ({ ...prev, authChecked: true }));
+        setAppState((prev) => ({ ...prev, authChecked: true }));
         return;
       }
 
       const user = await apiService.getMe();
       console.log(`✅ [App] Пользователь авторизован:`, user.username);
-      
-      setAppState(prev => ({
+
+      setAppState((prev) => ({
         ...prev,
         currentUser: user,
         authChecked: true,
-        error: null
+        error: null,
       }));
-
     } catch (error) {
       console.warn(`⚠️ [App] Ошибка проверки авторизации:`, error);
       localStorage.removeItem('authToken');
-      
-      setAppState(prev => ({
+
+      setAppState((prev) => ({
         ...prev,
         currentUser: null,
         authChecked: true,
-        error: null
+        error: null,
       }));
     }
   }, []);
@@ -217,11 +220,11 @@ const App: React.FC = () => {
   const handleLogout = useCallback((): void => {
     console.log(`🚪 [App] Выход из системы`);
     localStorage.removeItem('authToken');
-    
-    setAppState(prev => ({
+
+    setAppState((prev) => ({
       ...prev,
       currentUser: null,
-      error: null
+      error: null,
     }));
   }, []);
 
@@ -234,7 +237,7 @@ const App: React.FC = () => {
   console.log(`🎯 [App] Состояние рендера:`, {
     authChecked: appState.authChecked,
     isLoggedIn: !!appState.currentUser,
-    username: appState.currentUser?.username || 'Не авторизован'
+    username: appState.currentUser?.username || 'Не авторизован',
   });
 
   return (
@@ -250,8 +253,10 @@ const App: React.FC = () => {
               <div className="error-content">
                 <span className="error-icon">⚠️</span>
                 <span className="error-message">{appState.error}</span>
-                <button 
-                  onClick={() => setAppState(prev => ({ ...prev, error: null }))}
+                <button
+                  onClick={() =>
+                    setAppState((prev) => ({ ...prev, error: null }))
+                  }
                   className="error-close"
                 >
                   ✕

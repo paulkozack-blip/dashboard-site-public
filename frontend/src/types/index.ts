@@ -188,7 +188,7 @@ export interface IndicatorSettingsResponse {
  * Данные одного тикера из ответа API chart-data
  * @interface TickerChartData
  * @property {string} ticker - Название тикера
- * @property {string} group - Название группы  
+ * @property {string} group - Название группы
  * @property {string} type - Тип графика
  * @property {LineDataPoint[] | CandlestickDataPoint[]} data - Массив точек данных
  */
@@ -203,14 +203,14 @@ export interface TickerChartData {
  * Полный ответ API для данных графика группы
  * @interface GroupChartData
  * @description Объект где ключ - название тикера, значение - данные тикера
- * 
+ *
  * @example
  * // Ответ для линейной группы "92"
  * {
  *   "Восток92": {
  *     "ticker": "Восток92",
  *     "group": "92",
- *     "type": "line", 
+ *     "type": "line",
  *     "data": [{"date": "2022-01-10", "price": 51557.52, "volume": 3900}]
  *   }
  * }
@@ -236,7 +236,7 @@ export type ChartType = 'line' | 'candlestick';
 // ===== ПРОПСЫ КОМПОНЕНТОВ =====
 
 /**
- * Пропсы для компонента навигации  
+ * Пропсы для компонента навигации
  * @interface NavbarProps
  */
 export interface NavbarProps {
@@ -246,9 +246,9 @@ export interface NavbarProps {
   onLogout: () => void;
   onNavigateToDashboard?: () => void;
   showAdminButton?: boolean;
-  showGroupSelector?: boolean; 
-  currentView?: ViewType; 
-  onViewChange?: (view: ViewType) => void; 
+  showGroupSelector?: boolean;
+  currentView?: ViewType;
+  onViewChange?: (view: ViewType) => void;
 }
 
 /**
@@ -269,7 +269,11 @@ export interface LineChartProps {
   chartData: GroupChartData;
   group: string;
   className?: string;
-  onIndicatorToggle?: (ticker: string, indicator: string, enabled: boolean) => void;
+  onIndicatorToggle?: (
+    ticker: string,
+    indicator: string,
+    enabled: boolean
+  ) => void;
 }
 
 /**
@@ -280,7 +284,11 @@ export interface CandlestickChartProps {
   chartData: GroupChartData;
   group: string;
   className?: string;
-  onIndicatorToggle?: (ticker: string, indicator: string, enabled: boolean) => void;
+  onIndicatorToggle?: (
+    ticker: string,
+    indicator: string,
+    enabled: boolean
+  ) => void;
 }
 
 /**

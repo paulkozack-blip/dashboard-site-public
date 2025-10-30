@@ -4,10 +4,10 @@ import './Login.css';
 
 const Login: React.FC = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
-  const [credentials, setCredentials] = useState({ 
-    username: '', 
+  const [credentials, setCredentials] = useState({
+    username: '',
     password: '',
-    inviteCode: '' // camelCase для input
+    inviteCode: '', // camelCase для input
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -24,7 +24,7 @@ const Login: React.FC = () => {
         // Логин
         const response = await apiService.login({
           username: credentials.username,
-          password: credentials.password
+          password: credentials.password,
         });
         localStorage.setItem('authToken', response.access_token);
         window.location.reload();
@@ -33,7 +33,7 @@ const Login: React.FC = () => {
         const registerData = {
           username: credentials.username,
           password: credentials.password,
-          invite_code: credentials.inviteCode // ← snake_case для бэкенда
+          invite_code: credentials.inviteCode, // ← snake_case для бэкенда
         };
         await apiService.register(registerData);
         setMessage('Регистрация успешна! Теперь войдите в систему');
@@ -51,13 +51,15 @@ const Login: React.FC = () => {
     <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>
         <h2>{isLoginForm ? 'Вход в систему' : 'Регистрация'}</h2>
-        
+
         <div className="form-group">
           <label>Логин:</label>
           <input
             type="text"
             value={credentials.username}
-            onChange={(e) => setCredentials({...credentials, username: e.target.value})}
+            onChange={(e) =>
+              setCredentials({ ...credentials, username: e.target.value })
+            }
             required
           />
         </div>
@@ -67,7 +69,9 @@ const Login: React.FC = () => {
           <input
             type="password"
             value={credentials.password}
-            onChange={(e) => setCredentials({...credentials, password: e.target.value})}
+            onChange={(e) =>
+              setCredentials({ ...credentials, password: e.target.value })
+            }
             required
           />
         </div>
@@ -78,7 +82,9 @@ const Login: React.FC = () => {
             <input
               type="text"
               value={credentials.inviteCode}
-              onChange={(e) => setCredentials({...credentials, inviteCode: e.target.value})}
+              onChange={(e) =>
+                setCredentials({ ...credentials, inviteCode: e.target.value })
+              }
               required
             />
           </div>
@@ -88,15 +94,19 @@ const Login: React.FC = () => {
         {message && <div className="success-message">{message}</div>}
 
         <button type="submit" disabled={loading}>
-          {loading ? 'Загрузка...' : (isLoginForm ? 'Войти' : 'Зарегистрироваться')}
+          {loading
+            ? 'Загрузка...'
+            : isLoginForm
+              ? 'Войти'
+              : 'Зарегистрироваться'}
         </button>
 
         <div className="form-switch">
           {isLoginForm ? (
             <span>
               Нет аккаунта?{' '}
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="link-button"
                 onClick={() => setIsLoginForm(false)}
               >
@@ -106,8 +116,8 @@ const Login: React.FC = () => {
           ) : (
             <span>
               Уже есть аккаунт?{' '}
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="link-button"
                 onClick={() => setIsLoginForm(true)}
               >

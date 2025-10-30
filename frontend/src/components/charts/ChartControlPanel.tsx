@@ -7,7 +7,10 @@ interface ChartControlPanelProps {
   activeTickers: string[];
   onToggleTicker: (ticker: string) => void;
   indicators: IndicatorSettingsResponse | null;
-  indicatorStatus: Record<string, { ema: boolean; rsi: boolean; volume: boolean }>; // ← ДОБАВИТЬ volume
+  indicatorStatus: Record<
+    string,
+    { ema: boolean; rsi: boolean; volume: boolean }
+  >; // ← ДОБАВИТЬ volume
   onToggleIndicator: (ticker: string, key: 'ema' | 'rsi' | 'volume') => void; // ← ДОБАВИТЬ volume
   showVolume: boolean;
   onToggleVolume: () => void;
@@ -15,13 +18,26 @@ interface ChartControlPanelProps {
 }
 
 const ChartControlPanel: React.FC<ChartControlPanelProps> = ({
-  tickers, activeTickers, onToggleTicker, indicators, indicatorStatus, onToggleIndicator,
-  showVolume, onToggleVolume, onRefresh
+  tickers,
+  activeTickers,
+  onToggleTicker,
+  indicators,
+  indicatorStatus,
+  onToggleIndicator,
+  showVolume,
+  onToggleVolume,
+  onRefresh,
 }) => (
-  <nav className="chart-control-panel" role="toolbar" aria-label="управление графиком">
+  <nav
+    className="chart-control-panel"
+    role="toolbar"
+    aria-label="управление графиком"
+  >
     <fieldset>
-      <legend>Тикеры ({activeTickers.length}/{tickers.length} активны)</legend>
-      {tickers.map(ticker => (
+      <legend>
+        Тикеры ({activeTickers.length}/{tickers.length} активны)
+      </legend>
+      {tickers.map((ticker) => (
         <label key={ticker} className="ticker-checkbox">
           <input
             type="checkbox"
@@ -33,16 +49,16 @@ const ChartControlPanel: React.FC<ChartControlPanelProps> = ({
         </label>
       ))}
     </fieldset>
-    
+
     {indicators && (
       <fieldset>
         <legend>Индикаторы</legend>
-        
+
         {/* EMA индикаторы */}
         <div className="indicator-group">
           <span className="indicator-label">EMA:</span>
           <div className="indicator-tickers">
-            {tickers.map(ticker => (
+            {tickers.map((ticker) => (
               <label key={`${ticker}-ema`} className="indicator-checkbox">
                 <input
                   type="checkbox"
@@ -55,12 +71,12 @@ const ChartControlPanel: React.FC<ChartControlPanelProps> = ({
             ))}
           </div>
         </div>
-        
+
         {/* RSI индикаторы */}
         <div className="indicator-group">
           <span className="indicator-label">RSI:</span>
           <div className="indicator-tickers">
-            {tickers.map(ticker => (
+            {tickers.map((ticker) => (
               <label key={`${ticker}-rsi`} className="indicator-checkbox">
                 <input
                   type="checkbox"
@@ -73,12 +89,12 @@ const ChartControlPanel: React.FC<ChartControlPanelProps> = ({
             ))}
           </div>
         </div>
-        
+
         {/* Volume индикаторы - ТОЛЬКО ДЛЯ ЛИНЕЙНЫХ ГРАФИКОВ */}
         <div className="indicator-group">
           <span className="indicator-label">Объемы по тикерам:</span>
           <div className="indicator-tickers">
-            {tickers.map(ticker => (
+            {tickers.map((ticker) => (
               <label key={`${ticker}-volume`} className="indicator-checkbox">
                 <input
                   type="checkbox"
@@ -93,7 +109,7 @@ const ChartControlPanel: React.FC<ChartControlPanelProps> = ({
         </div>
       </fieldset>
     )}
-    
+
     <div className="chart-actions">
       <label className="volume-toggle">
         <input
@@ -104,10 +120,10 @@ const ChartControlPanel: React.FC<ChartControlPanelProps> = ({
         />
         📊 Общий объем
       </label>
-      
-      <button 
-        type="button" 
-        onClick={onRefresh} 
+
+      <button
+        type="button"
+        onClick={onRefresh}
         aria-label="Обновить"
         className="refresh-btn"
       >

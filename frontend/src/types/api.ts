@@ -91,7 +91,7 @@ export interface GroupChartData {
 
 /**
  * Информация о группе
- * @interface GroupInfo  
+ * @interface GroupInfo
  */
 export interface GroupInfo {
   /** Тип графика группы */

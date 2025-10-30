@@ -1,4 +1,4 @@
-// components/charts/TickerHeader.tsx 
+// components/charts/TickerHeader.tsx
 
 import React from 'react';
 
@@ -38,11 +38,11 @@ const TickerHeader: React.FC<TickerHeaderProps> = ({
     <div className="ticker-nav">
       <div className="ticker-nav-label">Тикеры</div>
       <div className="ticker-buttons">
-        {tickers.map(ticker => {
+        {tickers.map((ticker) => {
           const isActive = activeTickers.includes(ticker);
           const isCurrent = currentTicker === ticker;
           const color = colorMap[ticker] || '#666';
-          
+
           return (
             <button
               key={ticker}
@@ -50,16 +50,16 @@ const TickerHeader: React.FC<TickerHeaderProps> = ({
               onClick={(e) => handleTickerClick(ticker, e)}
               onDoubleClick={() => handleTickerDoubleClick(ticker)}
               title={
-                isActive 
+                isActive
                   ? `Клик: выбрать ${ticker}, Двойной клик: скрыть ${ticker}, Ctrl+Клик: скрыть ${ticker}`
                   : `Клик: выбрать ${ticker}, Двойной клик: показать ${ticker}, Ctrl+Клик: показать ${ticker}`
               }
             >
-              <span 
+              <span
                 className="ticker-dot"
-                style={{ 
+                style={{
                   backgroundColor: isActive ? color : '#e0e0e0',
-                  transform: isActive ? 'scale(1.1)' : 'scale(1)'
+                  transform: isActive ? 'scale(1.1)' : 'scale(1)',
                 }}
               />
               <span className="ticker-name">{ticker}</span>

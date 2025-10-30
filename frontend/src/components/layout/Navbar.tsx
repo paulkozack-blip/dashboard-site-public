@@ -13,7 +13,7 @@ const Navbar: React.FC<NavbarProps> = ({
   showAdminButton = true,
   showGroupSelector = true,
   currentView = 'dashboard',
-  onViewChange
+  onViewChange,
 }) => {
   const [groups, setGroups] = useState<GroupsData>({});
 
@@ -56,7 +56,7 @@ const Navbar: React.FC<NavbarProps> = ({
         <h2>📊 FinDash</h2>
         {currentUser && (
           <span className="user-info">
-            {currentUser.username} 
+            {currentUser.username}
             {currentUser.role === 'admin' && ' 👑'}
           </span>
         )}
@@ -72,7 +72,7 @@ const Navbar: React.FC<NavbarProps> = ({
           >
             📈 Графики
           </button>
-          
+
           {showAdminButton && currentUser?.role === 'admin' && (
             <button
               className={`view-btn ${currentView === 'admin' ? 'active' : ''}`}
@@ -93,9 +93,10 @@ const Navbar: React.FC<NavbarProps> = ({
               className="group-select"
             >
               <option value="">Выберите группу</option>
-              {Object.keys(groups).map(groupName => (
+              {Object.keys(groups).map((groupName) => (
                 <option key={groupName} value={groupName}>
-                  {groupName} ({groups[groupName]?.type === 'line' ? '📈' : '🕯️'})
+                  {groupName} (
+                  {groups[groupName]?.type === 'line' ? '📈' : '🕯️'})
                 </option>
               ))}
             </select>

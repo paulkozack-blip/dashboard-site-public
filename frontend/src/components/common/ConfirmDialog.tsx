@@ -13,7 +13,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   isOpen,
   message,
   onConfirm,
-  onCancel
+  onCancel,
 }) => {
   if (!isOpen) return null;
 
@@ -24,16 +24,10 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
           <h3>Подтверждение действия</h3>
           <p>{message}</p>
           <div className="confirm-dialog-actions">
-            <button 
-              onClick={onCancel}
-              className="confirm-dialog-btn cancel"
-            >
+            <button onClick={onCancel} className="confirm-dialog-btn cancel">
               Отмена
             </button>
-            <button 
-              onClick={onConfirm}
-              className="confirm-dialog-btn confirm"
-            >
+            <button onClick={onConfirm} className="confirm-dialog-btn confirm">
               Подтвердить
             </button>
           </div>

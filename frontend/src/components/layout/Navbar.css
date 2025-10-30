@@ -134,12 +134,12 @@
 }
 
 /* Стили для разных типов графиков в опциях */
-.group-select option[value*="line"] {
+.group-select option[value*='line'] {
   background: linear-gradient(135deg, #28a745, #20c997);
   color: white;
 }
 
-.group-select option[value*="candlestick"] {
+.group-select option[value*='candlestick'] {
   background: linear-gradient(135deg, #6f42c1, #e83e8c);
   color: white;
 }
@@ -174,19 +174,20 @@
     gap: 12px;
     padding: 12px 16px;
   }
-  
+
   .navbar-controls {
     justify-content: center;
     gap: 12px;
   }
-  
+
   .group-select {
     min-width: 180px;
     font-size: 13px;
     padding: 10px 14px;
   }
-  
-  .view-btn, .logout-btn {
+
+  .view-btn,
+  .logout-btn {
     padding: 8px 14px;
     font-size: 13px;
   }
@@ -198,17 +199,17 @@
     gap: 8px;
     text-align: center;
   }
-  
+
   .navbar-controls {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .view-switcher {
     width: 100%;
     justify-content: center;
   }
-  
+
   .group-select {
     width: 100%;
     min-width: auto;
@@ -237,35 +238,35 @@
     background: #2d3748;
     border-bottom-color: #4a5568;
   }
-  
+
   .navbar-brand h2 {
     color: #e2e8f0;
   }
-  
+
   .view-switcher {
     background: #4a5568;
     border-color: #718096;
   }
-  
+
   .view-btn {
     color: #cbd5e0;
   }
-  
+
   .view-btn:hover {
     background: #718096;
     color: #e2e8f0;
   }
-  
+
   .view-btn.active {
     background: linear-gradient(135deg, #3182ce 0%, #2c5aa0 100%);
   }
-  
+
   .group-select {
     background: #4a5568;
     border-color: #718096;
     color: #e2e8f0;
   }
-  
+
   .group-select:hover,
   .group-select:focus {
     border-color: #63b3ed;

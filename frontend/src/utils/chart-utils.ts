@@ -6,7 +6,9 @@
 /**
  * Рассчитывает оптимальные параметры для отображения объемов
  */
-export const calculateVolumeScale = (volumeData: number[]): {
+export const calculateVolumeScale = (
+  volumeData: number[]
+): {
   minValue: number;
   maxValue: number;
   scaleFactor: number;
@@ -17,11 +19,11 @@ export const calculateVolumeScale = (volumeData: number[]): {
 
   const maxVolume = Math.max(...volumeData);
   const minVolume = Math.min(...volumeData);
-  
+
   // Добавляем отступы для лучшего отображения
   const maxValue = maxVolume * 1.1;
   const minValue = Math.max(0, minVolume * 0.9);
-  
+
   // Коэффициент масштабирования для нормализации
   const scaleFactor = maxValue > 0 ? 1000000 / maxValue : 1;
 
@@ -44,9 +46,9 @@ export const formatVolume = (volume: number): string => {
  * Определяет цвет объема на основе направления цены
  */
 export const getVolumeColor = (
-  currentPrice: number, 
-  previousPrice: number, 
-  baseUpColor: string = '#26a69a', 
+  currentPrice: number,
+  previousPrice: number,
+  baseUpColor: string = '#26a69a',
   baseDownColor: string = '#ef5350'
 ): string => {
   return currentPrice >= previousPrice ? baseUpColor : baseDownColor;

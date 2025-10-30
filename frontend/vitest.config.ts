@@ -1,6 +1,6 @@
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [react()],
@@ -16,17 +16,17 @@ export default defineConfig({
         'src/__tests__/',
         'src/workers/',
         '*.config.*',
-        'dist/'
+        'dist/',
       ],
       thresholds: {
         global: {
           branches: 80,
           functions: 80,
           lines: 80,
-          statements: 80
-        }
-      }
-    }
+          statements: 80,
+        },
+      },
+    },
   },
   resolve: {
     alias: {
@@ -35,7 +35,7 @@ export default defineConfig({
       '@/hooks': resolve(__dirname, './src/hooks'),
       '@/types': resolve(__dirname, './src/types'),
       '@/services': resolve(__dirname, './src/services'),
-      '@/utils': resolve(__dirname, './src/utils')
-    }
-  }
-})
+      '@/utils': resolve(__dirname, './src/utils'),
+    },
+  },
+});

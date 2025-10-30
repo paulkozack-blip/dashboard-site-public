@@ -12,22 +12,31 @@ import './Admin.css';
 const UploadSection: React.FC<{
   loading: boolean;
   uploadStats: any;
-  onFileUpload: (event: React.ChangeEvent<HTMLInputElement>, isCandlestick: boolean) => void;
+  onFileUpload: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    isCandlestick: boolean
+  ) => void;
   onResetData: (ticker?: string) => void;
   availableTickers: string[];
-}> = ({ loading, uploadStats, onFileUpload, onResetData, availableTickers }) => {
+}> = ({
+  loading,
+  uploadStats,
+  onFileUpload,
+  onResetData,
+  availableTickers,
+}) => {
   const [selectedTicker, setSelectedTicker] = useState<string>('');
   const [resetType, setResetType] = useState<'all' | 'ticker'>('all');
 
   return (
     <div className="upload-section">
       <h3>Загрузка финансовых данных</h3>
-      
+
       <div className="upload-card">
         <h4>📈 Линейные данные (цена закрытия)</h4>
         <p>Excel/CSV файл с колонками: date, price, volume, ticker</p>
-        <input 
-          type="file" 
+        <input
+          type="file"
           accept=".xlsx,.xls,.csv"
           onChange={(e) => onFileUpload(e, false)}
           disabled={loading}
@@ -36,9 +45,12 @@ const UploadSection: React.FC<{
 
       <div className="upload-card">
         <h4>🕯️ Свечные данные (OHLC)</h4>
-        <p>Excel/CSV файл с колонками: date, open, high, low, close, volume, ticker</p>
-        <input 
-          type="file" 
+        <p>
+          Excel/CSV файл с колонками: date, open, high, low, close, volume,
+          ticker
+        </p>
+        <input
+          type="file"
           accept=".xlsx,.xls,.csv"
           onChange={(e) => onFileUpload(e, true)}
           disabled={loading}
@@ -48,14 +60,31 @@ const UploadSection: React.FC<{
       {uploadStats && (
         <div className="upload-stats">
           <h4>📊 Статистика загрузки</h4>
-          
+
           <div className="stats-summary">
-            <div>Файл: <strong>{uploadStats.filename}</strong></div>
-            <div>Листов обработано: <strong>{uploadStats.sheets_processed}</strong></div>
-            <div>Новых записей: <strong>{uploadStats.new_records_added}</strong></div>
-            <div>Существующих записей: <strong>{uploadStats.existing_records_skipped}</strong></div>
-            <div>Пропущено невалидных: <strong>{uploadStats.invalid_records_skipped}</strong></div>
-            <div>Дата обработки: <strong>{new Date(uploadStats.processing_date).toLocaleString()}</strong></div>
+            <div>
+              Файл: <strong>{uploadStats.filename}</strong>
+            </div>
+            <div>
+              Листов обработано: <strong>{uploadStats.sheets_processed}</strong>
+            </div>
+            <div>
+              Новых записей: <strong>{uploadStats.new_records_added}</strong>
+            </div>
+            <div>
+              Существующих записей:{' '}
+              <strong>{uploadStats.existing_records_skipped}</strong>
+            </div>
+            <div>
+              Пропущено невалидных:{' '}
+              <strong>{uploadStats.invalid_records_skipped}</strong>
+            </div>
+            <div>
+              Дата обработки:{' '}
+              <strong>
+                {new Date(uploadStats.processing_date).toLocaleString()}
+              </strong>
+            </div>
           </div>
 
           <div className="tickers-details">
@@ -80,7 +109,7 @@ const UploadSection: React.FC<{
 
       <div className="upload-card danger">
         <h4>🗑️ Опасная зона</h4>
-        
+
         <div className="reset-options">
           <label>
             <input
@@ -91,7 +120,7 @@ const UploadSection: React.FC<{
             />
             Удалить ВСЕ данные
           </label>
-          
+
           <label>
             <input
               type="radio"
@@ -112,20 +141,24 @@ const UploadSection: React.FC<{
               disabled={availableTickers.length === 0}
             >
               <option value="">-- Выберите тикер --</option>
-              {availableTickers.map(ticker => (
+              {availableTickers.map((ticker) => (
                 <option key={ticker} value={ticker}>
                   {ticker}
                 </option>
               ))}
             </select>
             {availableTickers.length === 0 && (
-              <p className="warning-text">⚠️ Нет доступных тикеров для удаления</p>
+              <p className="warning-text">
+                ⚠️ Нет доступных тикеров для удаления
+              </p>
             )}
           </div>
         )}
 
-        <button 
-          onClick={() => onResetData(resetType === 'ticker' ? selectedTicker : undefined)}
+        <button
+          onClick={() =>
+            onResetData(resetType === 'ticker' ? selectedTicker : undefined)
+          }
           disabled={loading || (resetType === 'ticker' && !selectedTicker)}
           className="danger-btn"
         >
@@ -145,36 +178,40 @@ const IndicatorSettingsSection: React.FC = () => {
   const [settings, setSettings] = useState({
     ema_period_short: 50,
     ema_period_long: 200,
-    rsi_period: 14
+    rsi_period: 14,
   });
 
   const saveSettings = async () => {
     try {
       const payload = {
         ema_periods: [settings.ema_period_short, settings.ema_period_long],
-        rsi_period: settings.rsi_period
+        rsi_period: settings.rsi_period,
       };
-      
+
       await apiService.setIndicators(payload);
       alert('✅ Настройки сохранены!');
     } catch (error: any) {
-      alert(`❌ Ошибка сохранения: ${error.response?.data?.detail || error.message}`);
+      alert(
+        `❌ Ошибка сохранения: ${error.response?.data?.detail || error.message}`
+      );
     }
   };
 
   return (
     <div className="indicators-section">
       <h3>Настройка технических индикаторов</h3>
-      
+
       <div className="settings-group">
         <label>Короткий период EMA:</label>
-        <input 
+        <input
           type="number"
           value={settings.ema_period_short}
-          onChange={(e) => setSettings({
-            ...settings,
-            ema_period_short: Math.max(1, parseInt(e.target.value) || 50)
-          })}
+          onChange={(e) =>
+            setSettings({
+              ...settings,
+              ema_period_short: Math.max(1, parseInt(e.target.value) || 50),
+            })
+          }
           min="1"
           max="500"
         />
@@ -182,13 +219,18 @@ const IndicatorSettingsSection: React.FC = () => {
 
       <div className="settings-group">
         <label>Длинный период EMA:</label>
-        <input 
+        <input
           type="number"
           value={settings.ema_period_long}
-          onChange={(e) => setSettings({
-            ...settings,
-            ema_period_long: Math.max(settings.ema_period_short + 1, parseInt(e.target.value) || 200)
-          })}
+          onChange={(e) =>
+            setSettings({
+              ...settings,
+              ema_period_long: Math.max(
+                settings.ema_period_short + 1,
+                parseInt(e.target.value) || 200
+              ),
+            })
+          }
           min={settings.ema_period_short + 1}
           max="1000"
         />
@@ -197,13 +239,15 @@ const IndicatorSettingsSection: React.FC = () => {
 
       <div className="settings-group">
         <label>Период RSI:</label>
-        <input 
+        <input
           type="number"
           value={settings.rsi_period}
-          onChange={(e) => setSettings({
-            ...settings,
-            rsi_period: Math.max(1, parseInt(e.target.value) || 14)
-          })}
+          onChange={(e) =>
+            setSettings({
+              ...settings,
+              rsi_period: Math.max(1, parseInt(e.target.value) || 14),
+            })
+          }
           min="1"
           max="100"
         />
@@ -224,7 +268,7 @@ const UserManagementSection: React.FC<{
   const [creating, setCreating] = useState<boolean>(false);
   const [inviteData, setInviteData] = useState({
     username_for: '',
-    expires_in_days: 7
+    expires_in_days: 7,
   });
   const [users, setUsers] = useState<any[]>([]);
   const [loadingUsers, setLoadingUsers] = useState<boolean>(false);
@@ -232,7 +276,7 @@ const UserManagementSection: React.FC<{
   const deleteConfirm = useConfirm();
   const adminConfirm = useConfirm();
 
-  const activeInvites = invites.filter(invite => !invite.is_used);
+  const activeInvites = invites.filter((invite) => !invite.is_used);
 
   useEffect(() => {
     loadUsers();
@@ -242,14 +286,14 @@ const UserManagementSection: React.FC<{
     setLoadingUsers(true);
     try {
       const response = await apiService.getUsers();
-      
+
       const normalizedUsers = response.map((user: any) => ({
         ...user,
         role: user.role.includes('ADMIN') ? 'admin' : 'user',
         is_active: Boolean(user.is_active),
-        is_verified: Boolean(user.is_verified)
+        is_verified: Boolean(user.is_verified),
       }));
-      
+
       setUsers(normalizedUsers || []);
     } catch (error) {
       console.error('Ошибка загрузки пользователей:', error);
@@ -268,16 +312,24 @@ const UserManagementSection: React.FC<{
           alert(`✅ Пользователь ${username} удален!`);
           loadUsers();
         } catch (error: any) {
-          alert(`❌ Ошибка удаления: ${error.response?.data?.detail || error.message}`);
+          alert(
+            `❌ Ошибка удаления: ${error.response?.data?.detail || error.message}`
+          );
         }
       }
     );
   };
 
-  const toggleUserActive = async (userId: number, username: string, currentStatus: boolean) => {
+  const toggleUserActive = async (
+    userId: number,
+    username: string,
+    currentStatus: boolean
+  ) => {
     try {
       await apiService.toggleUserActive(userId);
-      alert(`✅ Пользователь ${username} ${currentStatus ? 'деактивирован' : 'активирован'}!`);
+      alert(
+        `✅ Пользователь ${username} ${currentStatus ? 'деактивирован' : 'активирован'}!`
+      );
       loadUsers();
     } catch (error: any) {
       alert(`❌ Ошибка: ${error.response?.data?.detail || error.message}`);
@@ -309,13 +361,15 @@ const UserManagementSection: React.FC<{
       if (inviteData.expires_in_days !== 7) {
         payload.expires_in_days = inviteData.expires_in_days;
       }
-      
+
       await apiService.createInvite(payload);
       alert('✅ Инвайт-код создан!');
       setInviteData({ username_for: '', expires_in_days: 7 });
       onInviteCreated();
     } catch (error: any) {
-      alert(`❌ Ошибка создания: ${error.response?.data?.detail || error.message}`);
+      alert(
+        `❌ Ошибка создания: ${error.response?.data?.detail || error.message}`
+      );
     } finally {
       setCreating(false);
     }
@@ -327,7 +381,7 @@ const UserManagementSection: React.FC<{
 
       <div className="users-management">
         <h4>👥 Список пользователей</h4>
-        
+
         {loadingUsers ? (
           <p>Загрузка пользователей...</p>
         ) : (
@@ -344,40 +398,52 @@ const UserManagementSection: React.FC<{
                 </tr>
               </thead>
               <tbody>
-                {users.map(user => (
+                {users.map((user) => (
                   <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.username}</td>
                     <td>
-                      <span className={`role-badge ${user.role === 'admin' ? 'admin' : 'user'}`}>
+                      <span
+                        className={`role-badge ${user.role === 'admin' ? 'admin' : 'user'}`}
+                      >
                         {user.role === 'admin' ? '👑 Админ' : '👤 Пользователь'}
                       </span>
                     </td>
                     <td>
-                      <span className={`status-badge ${user.is_active ? 'active' : 'inactive'}`}>
+                      <span
+                        className={`status-badge ${user.is_active ? 'active' : 'inactive'}`}
+                      >
                         {user.is_active ? '✅ Активен' : '❌ Неактивен'}
                       </span>
                     </td>
                     <td>{new Date(user.created_at).toLocaleDateString()}</td>
                     <td className="actions">
-                      <button 
-                        onClick={() => toggleUserActive(user.id, user.username, user.is_active)}
+                      <button
+                        onClick={() =>
+                          toggleUserActive(
+                            user.id,
+                            user.username,
+                            user.is_active
+                          )
+                        }
                         className="action-btn toggle-active"
                       >
-                        {user.is_active ? '❌ Деактивировать' : '✅ Активировать'}
+                        {user.is_active
+                          ? '❌ Деактивировать'
+                          : '✅ Активировать'}
                       </button>
-                      
+
                       {user.role !== 'admin' && (
-                        <button 
+                        <button
                           onClick={() => makeUserAdmin(user.id, user.username)}
                           className="action-btn make-admin"
                         >
                           🎯 Сделать админом
                         </button>
                       )}
-                      
+
                       {user.role !== 'admin' && (
-                        <button 
+                        <button
                           onClick={() => deleteUser(user.id, user.username)}
                           className="action-btn danger"
                         >
@@ -389,7 +455,7 @@ const UserManagementSection: React.FC<{
                 ))}
               </tbody>
             </table>
-            
+
             {users.length === 0 && (
               <p className="no-users">Пользователи не найдены</p>
             )}
@@ -399,29 +465,36 @@ const UserManagementSection: React.FC<{
 
       <div className="invite-section">
         <h4>🎫 Создать инвайт-код</h4>
-        
+
         <div className="invite-form">
           <div className="form-group">
             <label>Для пользователя (опционально):</label>
             <input
               type="text"
               value={inviteData.username_for}
-              onChange={(e) => setInviteData({...inviteData, username_for: e.target.value})}
+              onChange={(e) =>
+                setInviteData({ ...inviteData, username_for: e.target.value })
+              }
               placeholder="Имя пользователя"
             />
           </div>
-          
+
           <div className="form-group">
             <label>Срок действия (дней):</label>
             <input
               type="number"
               value={inviteData.expires_in_days}
-              onChange={(e) => setInviteData({...inviteData, expires_in_days: parseInt(e.target.value) || 7})}
+              onChange={(e) =>
+                setInviteData({
+                  ...inviteData,
+                  expires_in_days: parseInt(e.target.value) || 7,
+                })
+              }
               min="1"
               max="365"
             />
           </div>
-          
+
           <button onClick={createInvite} disabled={creating}>
             {creating ? 'Создание...' : 'Создать инвайт-код'}
           </button>
@@ -434,10 +507,10 @@ const UserManagementSection: React.FC<{
           <p>Нет активных инвайт-кодов</p>
         ) : (
           <div className="invites-grid">
-            {activeInvites.map(invite => (
+            {activeInvites.map((invite) => (
               <div key={invite.id} className="invite-card">
                 <div className="invite-code">
-                  <strong>Код:</strong> 
+                  <strong>Код:</strong>
                   <code>{invite.invite_code}</code>
                 </div>
                 {invite.username_for && (
@@ -466,7 +539,7 @@ const UserManagementSection: React.FC<{
         onConfirm={deleteConfirm.handleConfirm}
         onCancel={deleteConfirm.handleCancel}
       />
-      
+
       <ConfirmDialog
         isOpen={adminConfirm.isOpen}
         message={adminConfirm.message}
@@ -484,21 +557,22 @@ interface AdminPanelProps {
   onNavigateToDashboard?: () => void;
 }
 
-const AdminPanel: React.FC<AdminPanelProps> = ({ 
-  currentUser, 
+const AdminPanel: React.FC<AdminPanelProps> = ({
+  currentUser,
   onLogout,
-  onNavigateToDashboard 
+  onNavigateToDashboard,
 }) => {
-  const [activeTab, setActiveTab] = useState<'upload' | 'indicators' | 'users'>('upload');
+  const [activeTab, setActiveTab] = useState<'upload' | 'indicators' | 'users'>(
+    'upload'
+  );
   const [uploadStats, setUploadStats] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [invites, setInvites] = useState<Invite[]>([]);
   const [availableTickers, setAvailableTickers] = useState<string[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
-  
+
   const resetConfirm = useConfirm();
   const navigate = useNavigate();
-
 
   // Функции загрузки данных
   const loadInvites = async () => {
@@ -522,17 +596,17 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
     }
   };
 
-    const loadGroups = async () => {
+  const loadGroups = async () => {
     try {
-        const groupsData = await apiService.getAvailableGroups();
-        const groupNames = Object.keys(groupsData);
-        if (groupNames.length > 0 && groupNames[0]) {
+      const groupsData = await apiService.getAvailableGroups();
+      const groupNames = Object.keys(groupsData);
+      if (groupNames.length > 0 && groupNames[0]) {
         setSelectedGroup(groupNames[0]);
-        }
+      }
     } catch (error) {
-        console.error('Ошибка загрузки групп:', error);
+      console.error('Ошибка загрузки групп:', error);
     }
-    };
+  };
 
   useEffect(() => {
     loadInvites();
@@ -553,21 +627,26 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
     }
   };
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>, isCandlestick: boolean = false) => {
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+    isCandlestick: boolean = false
+  ) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
     setLoading(true);
     try {
-      const result = isCandlestick 
+      const result = isCandlestick
         ? await apiService.uploadCandlestickData(file)
         : await apiService.uploadLinearData(file);
-      
+
       setUploadStats(result.statistics);
       alert('✅ Файл успешно загружен!');
       event.target.value = '';
     } catch (error: any) {
-      alert(`❌ Ошибка загрузки: ${error.response?.data?.detail || error.message}`);
+      alert(
+        `❌ Ошибка загрузки: ${error.response?.data?.detail || error.message}`
+      );
     } finally {
       setLoading(false);
     }
@@ -575,7 +654,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
 
   const handleResetData = (ticker?: string) => {
     resetConfirm.confirm(
-      ticker 
+      ticker
         ? `⚠️ Удалить данные для тикера "${ticker}"? Это действие нельзя отменить.`
         : '⚠️ Удалить ВСЕ данные? Это действие нельзя отменить.',
       async () => {
@@ -584,16 +663,17 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
           alert(`✅ ${result.message}`);
           loadTickers();
         } catch (error: any) {
-          alert(`❌ Ошибка удаления: ${error.response?.data?.detail || error.message}`);
+          alert(
+            `❌ Ошибка удаления: ${error.response?.data?.detail || error.message}`
+          );
         }
       }
     );
   };
 
   return (
-
     <div className="admin-panel">
-      <Navbar 
+      <Navbar
         onGroupSelect={handleGroupSelect}
         selectedGroup={selectedGroup}
         currentUser={currentUser}
@@ -602,24 +682,24 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
         showGroupSelector={false}
         showAdminButton={false}
       />
-      
+
       <div className="admin-content-wrapper">
         <h1>👨‍💼 Админ-панель FinDash</h1>
-        
+
         <div className="admin-tabs">
-          <button 
+          <button
             className={activeTab === 'upload' ? 'active' : ''}
             onClick={() => setActiveTab('upload')}
           >
             📤 Загрузка данных
           </button>
-          <button 
+          <button
             className={activeTab === 'indicators' ? 'active' : ''}
             onClick={() => setActiveTab('indicators')}
           >
             📊 Настройка индикаторов
           </button>
-          <button 
+          <button
             className={activeTab === 'users' ? 'active' : ''}
             onClick={() => setActiveTab('users')}
           >
@@ -629,7 +709,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
 
         <div className="admin-content">
           {activeTab === 'upload' && (
-            <UploadSection 
+            <UploadSection
               loading={loading}
               uploadStats={uploadStats}
               onFileUpload={handleFileUpload}
@@ -638,12 +718,10 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
             />
           )}
 
-          {activeTab === 'indicators' && (
-            <IndicatorSettingsSection />
-          )}
+          {activeTab === 'indicators' && <IndicatorSettingsSection />}
 
           {activeTab === 'users' && (
-            <UserManagementSection 
+            <UserManagementSection
               invites={invites}
               onInviteCreated={loadInvites}
             />
@@ -659,6 +737,6 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
       />
     </div>
   );
-};  
+};
 
 export default AdminPanel;

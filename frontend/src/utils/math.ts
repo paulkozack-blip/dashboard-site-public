@@ -13,7 +13,10 @@ import { addAlphaToHex } from './color';
  * @returns Array<VolumeStackPoint>
  */
 export const aggregateVolumeStack = (
-  volumeData: Record<string, Array<{ time: number; volume: number; color: string }>>
+  volumeData: Record<
+    string,
+    Array<{ time: number; volume: number; color: string }>
+  >
 ): VolumeStackPoint[] => {
   const timeMap: Record<string, VolumeStackPoint> = {};
 
@@ -27,10 +30,10 @@ export const aggregateVolumeStack = (
         };
       }
       timeMap[time].total += volume;
-      timeMap[time].parts.push({ 
-        ticker, 
-        volume, 
-        color 
+      timeMap[time].parts.push({
+        ticker,
+        volume,
+        color,
       });
     });
   });
@@ -41,14 +44,19 @@ export const aggregateVolumeStack = (
 /**
  * Сортирует части объемов по убыванию для корректного stacked отображения
  */
-export const sortVolumeParts = (parts: Array<{ ticker: string; volume: number; color: string }>) => {
+export const sortVolumeParts = (
+  parts: Array<{ ticker: string; volume: number; color: string }>
+) => {
   return [...parts].sort((a, b) => b.volume - a.volume);
 };
 
 /**
  * Рассчитывает прозрачность для каждого объема на основе его доли
  */
-export const calculateVolumeAlpha = (volume: number, totalVolume: number): number => {
+export const calculateVolumeAlpha = (
+  volume: number,
+  totalVolume: number
+): number => {
   if (totalVolume === 0) return 0.7;
   const ratio = volume / totalVolume;
   // Базовая прозрачность + коррекция для малых объемов
@@ -61,28 +69,31 @@ export const calculateVolumeAlpha = (volume: number, totalVolume: number): numbe
 export const createStackedVolumeData = (
   volumeStack: VolumeStackPoint[]
 ): Record<string, Array<{ time: number; value: number; color: string }>> => {
-  const result: Record<string, Array<{ time: number; value: number; color: string }>> = {};
-  
-  volumeStack.forEach(point => {
+  const result: Record<
+    string,
+    Array<{ time: number; value: number; color: string }>
+  > = {};
+
+  volumeStack.forEach((point) => {
     const sortedParts = sortVolumeParts(point.parts);
-    
-    sortedParts.forEach(part => {
+
+    sortedParts.forEach((part) => {
       const tickerKey = part.ticker;
       if (!result[tickerKey]) {
         result[tickerKey] = [];
       }
-      
+
       const alpha = calculateVolumeAlpha(part.volume, point.total);
       const colorWithAlpha = addAlphaToHex(part.color, alpha);
-      
+
       result[tickerKey]!.push({
         time: point.time,
         value: part.volume,
-        color: colorWithAlpha
+        color: colorWithAlpha,
       });
     });
   });
-  
+
   return result;
 };
 
@@ -91,9 +102,7 @@ export const createStackedVolumeData = (
  * @param series - Array с volume
  * @returns общий объем
  */
-export const sumVolumes = (
-  series: Array<{ volume?: number }>
-): number => {
+export const sumVolumes = (series: Array<{ volume?: number }>): number => {
   return series.reduce((acc, cur) => acc + (cur.volume || 0), 0);
 };
 
@@ -102,9 +111,7 @@ export const sumVolumes = (
  * @param volumeStack - Массив VolumeStackPoint
  * @returns максимальный общий объем
  */
-export const getMaxTotalVolume = (
-  volumeStack: VolumeStackPoint[]
-): number => {
+export const getMaxTotalVolume = (volumeStack: VolumeStackPoint[]): number => {
   return volumeStack.reduce((max, point) => Math.max(max, point.total), 0);
 };
 
@@ -125,9 +132,6 @@ export const roundValue = (value: number, precision: number = 2): number => {
  * @param denominator - знаменатель
  * @returns результат деления или 0 если знаменатель == 0
  */
-export const safeDivide = (
-  numerator: number,
-  denominator: number
-): number => {
+export const safeDivide = (numerator: number, denominator: number): number => {
   return denominator !== 0 ? numerator / denominator : 0;
 };

@@ -8,7 +8,7 @@
  */
 export const BASE_COLORS = [
   '#1E88E5', // Blue
-  '#E53935', // Red  
+  '#E53935', // Red
   '#43A047', // Green
   '#FB8C00', // Orange
   '#8E24AA', // Purple
@@ -24,7 +24,9 @@ export const BASE_COLORS = [
  * @param hex - Цвет в HEX формате (#RRGGBB)
  * @returns RGB компоненты
  */
-export function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
+export function hexToRgb(
+  hex: string
+): { r: number; g: number; b: number } | null {
   // #ff5544 или ff5544
   const cleaned = hex.replace(/^#/, '');
   const match = cleaned.match(/^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
@@ -217,7 +219,7 @@ export const generateGradient = (
 export const addAlphaToHex = (hex: string, alpha: number): string => {
   const rgb = hexToRgb(hex);
   if (!rgb) return hex;
-  
+
   const a = Math.max(0, Math.min(1, alpha));
   return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${a})`;
 };

@@ -1,4 +1,4 @@
-// components/charts/IndicatorPanel.tsx 
+// components/charts/IndicatorPanel.tsx
 
 import React from 'react';
 import { IndicatorSettingsResponse } from '@/types/api';
@@ -7,11 +7,14 @@ interface IndicatorPanelProps {
   currentTicker: string | null;
   colorMap: Record<string, string>;
   indicators: IndicatorSettingsResponse | null;
-  indicatorStatus: Record<string, { 
-    ema: Record<number, boolean>;
-    rsi: boolean; 
-    volume: boolean; 
-  }>;
+  indicatorStatus: Record<
+    string,
+    {
+      ema: Record<number, boolean>;
+      rsi: boolean;
+      volume: boolean;
+    }
+  >;
   onToggleEmaIndicator: (period: number) => void;
   onToggleRsiIndicator: () => void;
   onToggleVolumeIndicator: () => void;
@@ -40,16 +43,21 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
   onCancelFibonacciDrawing,
   onClearFibonacci,
 }) => {
-  const handleIndicatorToggle = async (type: 'ema' | 'rsi', period?: number) => {
+  const handleIndicatorToggle = async (
+    type: 'ema' | 'rsi',
+    period?: number
+  ) => {
     if (!currentTicker) return;
 
     const tickerIndicators = indicatorStatus[currentTicker];
-    
+
     // Если индикаторы еще не загружены, загружаем их и сразу включаем
     if (!tickerIndicators && onLoadIndicators) {
-      console.log(`📥 [IndicatorPanel] Загрузка и включение индикатора: ${type} ${period}`);
+      console.log(
+        `📥 [IndicatorPanel] Загрузка и включение индикатора: ${type} ${period}`
+      );
       await onLoadIndicators(currentTicker);
-      
+
       // После загрузки сразу переключаем индикатор
       setTimeout(() => {
         if (type === 'ema' && period) {
@@ -76,9 +84,18 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
 
   // Обработчики для Фибоначчи
   const handleFibonacciToggle = () => {
-    console.log('🔄 [Fibonacci] Toggle clicked, isDrawing:', isDrawingFibonacci);
-    console.log('🔄 [Fibonacci] onCancelFibonacciDrawing:', onCancelFibonacciDrawing);
-    console.log('🔄 [Fibonacci] onStartFibonacciDrawing:', onStartFibonacciDrawing);
+    console.log(
+      '🔄 [Fibonacci] Toggle clicked, isDrawing:',
+      isDrawingFibonacci
+    );
+    console.log(
+      '🔄 [Fibonacci] onCancelFibonacciDrawing:',
+      onCancelFibonacciDrawing
+    );
+    console.log(
+      '🔄 [Fibonacci] onStartFibonacciDrawing:',
+      onStartFibonacciDrawing
+    );
 
     if (isDrawingFibonacci) {
       console.log('❌ [Fibonacci] Calling cancelDrawing');
@@ -94,20 +111,28 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
       <div className="indicator-panel">
         <div className="indicator-panel-label">Индикаторы</div>
         <div className="indicator-chips">
-          <span className="no-ticker-message">Выберите тикер для управления индикаторами</span>
-          
+          <span className="no-ticker-message">
+            Выберите тикер для управления индикаторами
+          </span>
+
           <button
             className={`indicator-chip ${hasFibonacciRetracements ? 'active' : 'inactive'} ${isDrawingFibonacci ? 'drawing' : ''}`}
             onClick={handleFibonacciToggle}
-            style={isDrawingFibonacci ? {
-              backgroundColor: '#ff444415',
-              borderColor: '#ff4444',
-              color: '#ff4444'
-            } : hasFibonacciRetracements ? {
-              backgroundColor: '#667eea15',
-              borderColor: '#667eea',
-              color: '#667eea'
-            } : {}}
+            style={
+              isDrawingFibonacci
+                ? {
+                    backgroundColor: '#ff444415',
+                    borderColor: '#ff4444',
+                    color: '#ff4444',
+                  }
+                : hasFibonacciRetracements
+                  ? {
+                      backgroundColor: '#667eea15',
+                      borderColor: '#667eea',
+                      color: '#667eea',
+                    }
+                  : {}
+            }
           >
             <span className="indicator-icon">
               {isDrawingFibonacci ? '×' : 'F'}
@@ -116,7 +141,7 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
               {isDrawingFibonacci ? 'Отменить Фибо' : 'Фибоначчи'}
             </span>
           </button>
-          
+
           {hasFibonacciRetracements && (
             <button
               className="indicator-chip"
@@ -133,10 +158,10 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
   }
 
   const tickerColor = colorMap[currentTicker] || '#3498db';
-  const tickerIndicators = indicatorStatus[currentTicker] || { 
-    ema: {}, 
-    rsi: false, 
-    volume: true 
+  const tickerIndicators = indicatorStatus[currentTicker] || {
+    ema: {},
+    rsi: false,
+    volume: true,
   };
 
   const hasLoadedIndicators = Object.keys(tickerIndicators.ema).length > 0;
@@ -144,7 +169,8 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
   return (
     <div className="indicator-panel">
       <div className="indicator-panel-label">
-        Индикаторы для <span style={{ color: tickerColor }}>{currentTicker}</span>
+        Индикаторы для{' '}
+        <span style={{ color: tickerColor }}>{currentTicker}</span>
         {!hasLoadedIndicators && (
           <button
             onClick={() => onLoadIndicators?.(currentTicker)}
@@ -157,7 +183,7 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
               color: 'white',
               border: 'none',
               borderRadius: '4px',
-              cursor: isLoadingIndicators ? 'not-allowed' : 'pointer'
+              cursor: isLoadingIndicators ? 'not-allowed' : 'pointer',
             }}
           >
             {isLoadingIndicators ? 'Загрузка...' : 'Загрузить индикаторы'}
@@ -166,17 +192,21 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
       </div>
       <div className="indicator-chips">
         {/* EMA индикаторы */}
-        {indicators.ema_periods.map(period => (
+        {indicators.ema_periods.map((period) => (
           <button
             key={`ema-${period}`}
             className={`indicator-chip ${tickerIndicators.ema[period] ? 'active' : 'inactive'}`}
             onClick={() => handleIndicatorToggle('ema', period)}
             disabled={isLoadingIndicators}
-            style={tickerIndicators.ema[period] ? {
-              backgroundColor: `${tickerColor}15`,
-              borderColor: tickerColor,
-              color: tickerColor
-            } : {}}
+            style={
+              tickerIndicators.ema[period]
+                ? {
+                    backgroundColor: `${tickerColor}15`,
+                    borderColor: tickerColor,
+                    color: tickerColor,
+                  }
+                : {}
+            }
           >
             <span className="indicator-icon">
               {tickerIndicators.ema[period] ? '✓' : '○'}
@@ -187,17 +217,21 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
             </span>
           </button>
         ))}
-        
+
         {/* RSI индикатор */}
         <button
           className={`indicator-chip ${tickerIndicators.rsi ? 'active' : 'inactive'}`}
           onClick={() => handleIndicatorToggle('rsi')}
           disabled={isLoadingIndicators}
-          style={tickerIndicators.rsi ? {
-            backgroundColor: `${tickerColor}15`,
-            borderColor: tickerColor,
-            color: tickerColor
-          } : {}}
+          style={
+            tickerIndicators.rsi
+              ? {
+                  backgroundColor: `${tickerColor}15`,
+                  borderColor: tickerColor,
+                  color: tickerColor,
+                }
+              : {}
+          }
         >
           <span className="indicator-icon">
             {tickerIndicators.rsi ? '✓' : '○'}
@@ -207,16 +241,20 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
             {!hasLoadedIndicators && isLoadingIndicators && ' ⏳'}
           </span>
         </button>
-        
+
         {/* Volume индикатор */}
         <button
           className={`indicator-chip ${tickerIndicators.volume ? 'active' : 'inactive'}`}
           onClick={handleVolumeToggle}
-          style={tickerIndicators.volume ? {
-            backgroundColor: `${tickerColor}15`,
-            borderColor: tickerColor,
-            color: tickerColor
-          } : {}}
+          style={
+            tickerIndicators.volume
+              ? {
+                  backgroundColor: `${tickerColor}15`,
+                  borderColor: tickerColor,
+                  color: tickerColor,
+                }
+              : {}
+          }
         >
           <span className="indicator-icon">
             {tickerIndicators.volume ? '✓' : '○'}
@@ -231,15 +269,21 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
         <button
           className={`indicator-chip ${hasFibonacciRetracements ? 'active' : 'inactive'} ${isDrawingFibonacci ? 'drawing' : ''}`}
           onClick={handleFibonacciToggle}
-          style={isDrawingFibonacci ? {
-            backgroundColor: '#ff444415',
-            borderColor: '#ff4444',
-            color: '#ff4444'
-          } : hasFibonacciRetracements ? {
-            backgroundColor: '#667eea15',
-            borderColor: '#667eea',
-            color: '#667eea'
-          } : {}}
+          style={
+            isDrawingFibonacci
+              ? {
+                  backgroundColor: '#ff444415',
+                  borderColor: '#ff4444',
+                  color: '#ff4444',
+                }
+              : hasFibonacciRetracements
+                ? {
+                    backgroundColor: '#667eea15',
+                    borderColor: '#667eea',
+                    color: '#667eea',
+                  }
+                : {}
+          }
         >
           <span className="indicator-icon">
             {isDrawingFibonacci ? '×' : 'F'}
@@ -248,7 +292,7 @@ const IndicatorPanel: React.FC<IndicatorPanelProps> = ({
             {isDrawingFibonacci ? 'Отменить Фибо' : 'Фибоначчи'}
           </span>
         </button>
-        
+
         {hasFibonacciRetracements && (
           <button
             className="indicator-chip"

@@ -9,10 +9,13 @@ export const useConfirm = () => {
     onCancel?: () => void;
   } | null>(null);
 
-  const confirm = useCallback((message: string, onConfirm: () => void, onCancel?: () => void) => {
-    setConfig({ message, onConfirm, onCancel });
-    setIsOpen(true);
-  }, []);
+  const confirm = useCallback(
+    (message: string, onConfirm: () => void, onCancel?: () => void) => {
+      setConfig({ message, onConfirm, onCancel });
+      setIsOpen(true);
+    },
+    []
+  );
 
   const handleConfirm = useCallback(() => {
     config?.onConfirm();
@@ -31,6 +34,6 @@ export const useConfirm = () => {
     message: config?.message || '',
     confirm,
     handleConfirm,
-    handleCancel
+    handleCancel,
   };
 };

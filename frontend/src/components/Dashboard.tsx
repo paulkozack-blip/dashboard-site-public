@@ -11,10 +11,10 @@ interface DashboardProps {
   onNavigateToAdmin?: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ 
-  currentUser, 
-  onLogout, 
-  onNavigateToAdmin 
+const Dashboard: React.FC<DashboardProps> = ({
+  currentUser,
+  onLogout,
+  onNavigateToAdmin,
 }) => {
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
 
@@ -26,7 +26,7 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   const handleViewChange = (view: ViewType) => {
     console.log(`🔄 [Dashboard] Смена вида на: ${view}`);
-    
+
     if (view === 'admin' && onNavigateToAdmin) {
       onNavigateToAdmin();
     }
@@ -34,7 +34,7 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   return (
     <div className="dashboard">
-      <Navbar 
+      <Navbar
         onGroupSelect={handleGroupSelect} // ПЕРЕДАЕМ ОБРАБОТЧИК
         selectedGroup={selectedGroup}
         currentUser={currentUser}
@@ -45,7 +45,7 @@ const Dashboard: React.FC<DashboardProps> = ({
         currentView="dashboard"
         onViewChange={handleViewChange}
       />
-      
+
       <div className="dashboard__content">
         {!selectedGroup ? (
           <div className="dashboard-welcome">

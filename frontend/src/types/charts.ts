@@ -92,7 +92,7 @@ export interface IndicatorSettings {
 
 /**
  * Ответ сервера с данными индикатора
- * @interface IndicatorResponse  
+ * @interface IndicatorResponse
  */
 export interface IndicatorResponse {
   /** Название тикера */
