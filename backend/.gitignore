@@ -22,3 +22,11 @@ uploads/
 # IDE
 .vscode/
 .idea/
+
+# Данные пользователей
+/uploads/
+/config/
+user_data/
+*.csv
+*.json
+*.xlsx
