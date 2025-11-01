@@ -651,7 +651,7 @@ const CandlestickOrLineChart: React.FC<CandlestickOrLineChartProps> = ({
     };
   }, [fibonacciState.isDrawing, onAddFibonacciPoint, series]);
 
-  // 7. Отрисовка уровней Фибоначчи БЕЗ МЕТОК
+  // 7. Отрисовка уровней Фибоначчи 
   useEffect(() => {
     if (!chartRef.current) return;
 
@@ -688,38 +688,94 @@ const CandlestickOrLineChart: React.FC<CandlestickOrLineChartProps> = ({
         endTime: new Date(endTime * 1000).toISOString(),
       });
 
-      // Создаем серию для основной трендовой линии
-      const trendLineSeries = chart.addLineSeries({
-        color: retr.color,
-        lineWidth: 2,
-        priceScaleId: 'right',
-      });
+      // ВАЛИДАЦИЯ ДАННЫХ - проверяем что все значения корректны
+      const isValidStartPoint = startTime && !isNaN(retr.startPoint.price) && retr.startPoint.price !== null;
+      const isValidEndPoint = endTime && !isNaN(retr.endPoint.price) && retr.endPoint.price !== null;
 
-      trendLineSeries.setData([
-        { time: startTime as Time, value: retr.startPoint.price },
-        { time: endTime as Time, value: retr.endPoint.price },
-      ]);
-
-      seriesRefs.current.fibonacci.push(trendLineSeries);
-
-      // Создаем уровни Фибоначчи (только линии)
-      retr.levels
-        .filter((lvl) => lvl.visible)
-        .forEach((level) => {
-          const fibSeries = chart.addLineSeries({
-            color: level.color,
-            lineWidth: 3,
-            priceScaleId: 'right',
-            lineStyle: 2, // Пунктирная линия
-          });
-
-          fibSeries.setData([
-            { time: startTime as Time, value: level.price },
-            { time: endTime as Time, value: level.price },
-          ]);
-
-          seriesRefs.current.fibonacci.push(fibSeries);
+      if (!isValidStartPoint || !isValidEndPoint) {
+        console.warn('❌ [Fibonacci] Некорректные данные точек:', {
+          startTime,
+          startPrice: retr.startPoint.price,
+          endTime,
+          endPrice: retr.endPoint.price
         });
+        return;
+      }
+
+      try {
+        // Создаем серию для основной трендовой линии
+        const trendLineSeries = chart.addLineSeries({
+          color: retr.color,
+          lineWidth: 2,
+          priceScaleId: 'right',
+        });
+
+        const trendData = [
+          { time: startTime as Time, value: retr.startPoint.price },
+          { time: endTime as Time, value: retr.endPoint.price },
+        ];
+
+        // Дополнительная проверка данных перед установкой
+        const isValidTrendData = trendData.every(point => 
+          point.time && 
+          point.value !== null && 
+          point.value !== undefined && 
+          !isNaN(point.value)
+        );
+
+        if (isValidTrendData) {
+          trendLineSeries.setData(trendData);
+          seriesRefs.current.fibonacci.push(trendLineSeries);
+        } else {
+          console.warn('❌ [Fibonacci] Некорректные данные трендовой линии:', trendData);
+          chart.removeSeries(trendLineSeries);
+        }
+
+        // Создаем уровни Фибоначчи (только линии)
+        retr.levels
+          .filter((lvl) => lvl.visible)
+          .forEach((level) => {
+            try {
+              // Проверяем валидность уровня
+              if (!level.price || isNaN(level.price) || level.price === null) {
+                console.warn('❌ [Fibonacci] Некорректная цена уровня:', level);
+                return;
+              }
+
+              const fibSeries = chart.addLineSeries({
+                color: level.color,
+                lineWidth: 1, // Уменьшил с 3 до 1 для лучшего вида
+                priceScaleId: 'right',
+                lineStyle: 2, // Пунктирная линия
+              });
+
+              const fibData = [
+                { time: startTime as Time, value: level.price },
+                { time: endTime as Time, value: level.price },
+              ];
+
+              // Проверяем данные перед установкой
+              const isValidFibData = fibData.every(point => 
+                point.time && 
+                point.value !== null && 
+                point.value !== undefined && 
+                !isNaN(point.value)
+              );
+
+              if (isValidFibData) {
+                fibSeries.setData(fibData);
+                seriesRefs.current.fibonacci.push(fibSeries);
+              } else {
+                console.warn('❌ [Fibonacci] Некорректные данные уровня:', fibData);
+                chart.removeSeries(fibSeries);
+              }
+            } catch (error) {
+              console.error('❌ [Fibonacci] Ошибка создания уровня:', error);
+            }
+          });
+      } catch (error) {
+        console.error('❌ [Fibonacci] Ошибка создания трендовой линии:', error);
+      }
     });
   }, [fibonacciState.retracements]);
 
