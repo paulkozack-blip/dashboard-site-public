@@ -1,3 +1,4 @@
+# backend/app/database.py
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -58,7 +59,7 @@ def create_tables_and_admin():
             )
             db.add(admin_user)
             db.commit()
-            print("✅ Создан админ пользователь: admin / admin123")
+            print("✅ Создан админ пользователь: admin / admin")
     except Exception as e:
         print(f"❌ Ошибка создания админа: {e}")
         db.rollback()
